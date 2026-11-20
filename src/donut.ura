@@ -1,0 +1,79 @@
+use "@/math"
+use "@/unistd"
+
+W i32 = 80
+H i32 = 20
+
+template<T>:
+    struct Grid:
+        cells Array<T>
+
+        fn fill(value T):
+            self.cells.resize(W * H)
+            for i in Range::create(0, W * H):
+                self.cells[i] = value
+
+        operator [](at i32) &T:
+            return &self.cells[at]
+
+fn donut():
+    fn glow(light i32) Color:
+        match light / 3:
+            case 0:  return Color::BLUE
+            case 1:  return Color::CYAN
+            case 2:  return Color::WHITE
+            default: return Color::YELLOW
+        return Color::YELLOW
+
+    title("a spinning donut, ctrl+c to stop")
+    screen Grid<char>
+    depth Grid<f64>
+    light Grid<i32>
+    shades String = ".,-~:;=!*#$@"
+    a f64 = 0.0
+    b f64 = 0.0
+    is_first bool = True
+    while True:
+        screen.fill(' ')
+        depth.fill(0.0)
+        light.fill(0)
+        for j in Range::create(0, 90):
+            theta f64 = (j as f64) * 0.07
+            for k in Range::create(0, 314):
+                phi f64 = (k as f64) * 0.02
+                sp f64 = sin(phi)
+                cp f64 = cos(phi)
+                st f64 = sin(theta)
+                ct f64 = cos(theta)
+                circle f64 = ct + 2.0
+                d f64 = 1.0 / (sp * circle * sin(a) + st * cos(a) + 5.0)
+                t f64 = sp * circle * cos(a) - st * sin(a)
+                x i32 = (40.0 + 30.0 * d * (cp * circle * cos(b) - t * sin(b))) as i32
+                y i32 = (10.0 + 15.0 * d * (cp * circle * sin(b) + t * cos(b))) as i32
+                n i32 = (8.0 * (
+                      cos(b) * (st * sin(a) - sp * ct * cos(a))
+                    - sin(a) * sp * ct
+                    - cos(a) * st
+                    - sin(b) * cp * ct
+                )) as i32
+                inside bool = y >= 0 and y < H and x >= 0 and x < W
+                if inside and d > depth[x + W * y]:
+                    at i32 = x + W * y
+                    if n < 0:
+                        n = 0
+                    depth[at] = d
+                    screen[at] = shades[n]
+                    light[at] = n
+        if not is_first: output(27 as char, "[", H, "A")
+        is_first = False
+        for row in Range::create(0, H):
+            output("  ")
+            for col in Range::create(0, W):
+                at i32 = col + W * row
+                if screen[at] != ' ': paint(glow(light[at]))
+                output(screen[at])
+            reset()
+            output("\n")
+        a += 0.04
+        b += 0.02
+        usleep(30000)
