@@ -14,14 +14,14 @@ fn code(c Color) i32:
         default:             return 97
     return 0
 
-fn paint(c Color): output(27 as char, "[1;", code(c), "m")
-fn reset(): output(27 as char, "[0m")
+fn paint(c Color): io::out($"{27 as char}[1;{code(c)}m")
+fn reset(): io::out($"{27 as char}[0m")
 
 fn title(text String):
     paint(Color::CYAN)
-    output("\n  ", text, "\n")
+    io::out($"\n  {text}\n")
     reset()
     dash String = "-"
     paint(Color::GREY)
-    output("  ", dash.repeat(40), "\n")
+    io::out($"  {dash.repeat(40)}\n")
     reset()

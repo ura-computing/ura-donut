@@ -64,16 +64,16 @@ fn donut():
                     depth[at] = d
                     screen[at] = shades[n]
                     light[at] = n
-        if not is_first: output(27 as char, "[", H, "A")
+        if not is_first: io::out($"{27 as char}[{H}A")
         is_first = False
         for row in Range::create(0, H):
-            output("  ")
+            io::out("  ")
             for col in Range::create(0, W):
                 at i32 = col + W * row
                 if screen[at] != ' ': paint(glow(light[at]))
-                output(screen[at])
+                io::out($"{screen[at]}")
             reset()
-            output("\n")
+            io::out("\n")
         a += 0.04
         b += 0.02
         usleep(30000)
