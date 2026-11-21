@@ -31,4 +31,4 @@ ura run
 |---|---|
 | ura | [ura-lang](https://github.com/ura-computing/ura-lang) |
 | OS | Linux, macOS |
-| dependencies | [ura-core](https://github.com/ura-computing/ura-core), [ura-math](https://github.com/ura-computing/ura-math), [ura-posix](https://github.com/ura-computing/ura-posix) 0.1.0, cloned by `ura install` |
+| dependencies | [ura-core](https://github.com/ura-computing/ura-core), [ura-math](https://github.com/ura-computing/ura-math), [ura-posix](https://github.com/ura-computing/ura-posix) 0.0.1, cloned by `ura install` |
