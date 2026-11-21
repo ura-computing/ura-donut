@@ -1,5 +1,5 @@
 use "@/math"
-use "@/unistd"
+use "@/posix/unistd"
 
 W i32 = 80
 H i32 = 20
@@ -13,8 +13,8 @@ template<T>:
             for i in Range::create(0, W * H):
                 self.cells[i] = value
 
-        operator [](at i32) &T:
-            return &self.cells[at]
+    operator [](grid &Grid, at i32) &T:
+        return &grid.cells[at]
 
 fn donut():
     fn glow(light i32) Color:
