@@ -13,7 +13,7 @@ A spinning ASCII donut written in [ura](https://github.com/ura-computing/ura-lan
 ```
 git clone https://github.com/ura-computing/ura-donut
 cd ura-donut
-ura install
+ura deps install
 ura run
 ```
 
@@ -31,4 +31,4 @@ ura run
 |---|---|
 | ura | [ura-lang](https://github.com/ura-computing/ura-lang) |
 | OS | Linux, macOS |
-| dependencies | [ura-core](https://github.com/ura-computing/ura-core), [ura-math](https://github.com/ura-computing/ura-math), [ura-posix](https://github.com/ura-computing/ura-posix) 0.0.1, cloned by `ura install` |
+| dependencies | [ura-core](https://github.com/ura-computing/ura-core), [ura-math](https://github.com/ura-computing/ura-math), [ura-posix](https://github.com/ura-computing/ura-posix) 0.0.1, cloned by `ura deps install` |
