@@ -1,8 +1,9 @@
 use "@/math"
-use "@/posix/unistd"
+use "@/posix"
 
 W i32 = 80
 H i32 = 20
+FRAME_US i32 = 30000
 
 template<T>:
     struct Grid:
@@ -41,20 +42,20 @@ fn donut():
             theta f64 = (j as f64) * 0.07
             for k in Range::create(0, 314):
                 phi f64 = (k as f64) * 0.02
-                sp f64 = sin(phi)
-                cp f64 = cos(phi)
-                st f64 = sin(theta)
-                ct f64 = cos(theta)
+                sp f64 = math::sin(phi)
+                cp f64 = math::cos(phi)
+                st f64 = math::sin(theta)
+                ct f64 = math::cos(theta)
                 circle f64 = ct + 2.0
-                d f64 = 1.0 / (sp * circle * sin(a) + st * cos(a) + 5.0)
-                t f64 = sp * circle * cos(a) - st * sin(a)
-                x i32 = (40.0 + 30.0 * d * (cp * circle * cos(b) - t * sin(b))) as i32
-                y i32 = (10.0 + 15.0 * d * (cp * circle * sin(b) + t * cos(b))) as i32
+                d f64 = 1.0 / (sp * circle * math::sin(a) + st * math::cos(a) + 5.0)
+                t f64 = sp * circle * math::cos(a) - st * math::sin(a)
+                x i32 = (40.0 + 30.0 * d * (cp * circle * math::cos(b) - t * math::sin(b))) as i32
+                y i32 = (10.0 + 15.0 * d * (cp * circle * math::sin(b) + t * math::cos(b))) as i32
                 n i32 = (8.0 * (
-                      cos(b) * (st * sin(a) - sp * ct * cos(a))
-                    - sin(a) * sp * ct
-                    - cos(a) * st
-                    - sin(b) * cp * ct
+                      math::cos(b) * (st * math::sin(a) - sp * ct * math::cos(a))
+                    - math::sin(a) * sp * ct
+                    - math::cos(a) * st
+                    - math::sin(b) * cp * ct
                 )) as i32
                 inside bool = y >= 0 and y < H and x >= 0 and x < W
                 if inside and d > depth[x + W * y]:
@@ -76,4 +77,4 @@ fn donut():
             io::out("\n")
         a += 0.04
         b += 0.02
-        usleep(30000)
+        cstd::usleep(FRAME_US)
